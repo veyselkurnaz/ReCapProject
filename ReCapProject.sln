@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\Da
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Business", "Business\Business.csproj", "{EB3105AC-295F-48E3-B218-6646BBF9DD3C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleAraYuz", "ConsoleAraYuz\ConsoleAraYuz.csproj", "{F8C30421-4FCD-46CB-8E1C-1D4D3736DAD8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleAraYuz", "ConsoleAraYuz\ConsoleAraYuz.csproj", "{F8C30421-4FCD-46CB-8E1C-1D4D3736DAD8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{4EA9D048-21EC-40C2-9DE5-1CCB0ABBC057}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{F8C30421-4FCD-46CB-8E1C-1D4D3736DAD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8C30421-4FCD-46CB-8E1C-1D4D3736DAD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F8C30421-4FCD-46CB-8E1C-1D4D3736DAD8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EA9D048-21EC-40C2-9DE5-1CCB0ABBC057}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EA9D048-21EC-40C2-9DE5-1CCB0ABBC057}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EA9D048-21EC-40C2-9DE5-1CCB0ABBC057}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EA9D048-21EC-40C2-9DE5-1CCB0ABBC057}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
