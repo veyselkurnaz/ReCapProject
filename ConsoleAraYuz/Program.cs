@@ -1,5 +1,4 @@
 ﻿using Business.Concrete;
-using DataAccess.Concrete;
 using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
 using System;
@@ -10,61 +9,124 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
+            //CarManagerTest();
+            //BrandManagerTest();
+            //ColorManagerTest();
+            //CustomerManagerTest();
+            //UserManagerTest();
+            RentalManagerTest();
 
-            CarTest();
-            //BrandTest();
-            //ColorTest();
-            //DtoTest();
 
-        }
 
-        private static void CarTest()
-        {
-            CarManager carManager = new CarManager(new EfCarDal());
-            BrandManager brandManager = new BrandManager(new EfBrandDal());
-            ColorManager colorManager = new ColorManager(new EfColorDal());
-
-            foreach (var car in carManager.GetAll())
+            void RentalManagerTest()
             {
-                Console.WriteLine("{0} / {1} / {2}", brandManager.GetByBrandId(car.BrandId).BrandName, colorManager.GetByColorId(car.ColorId).ColorName, car.DailyPrice);
+                RentalManager rentalManager = new RentalManager(new EfRentalDal());
+                var result = rentalManager.Add(new Rental
+                {
+                    CarId = 2,
+                    CustomerId = 3,
+                    RentalId = 6,
+                    RentDate = new DateTime(2021, 2, 5, 11, 30, 00),
+                    ReturnDate = null,
+
+
+                });
+                Console.WriteLine(result.Success);
+                Console.WriteLine(result.Message);
+
             }
 
-            carManager.Add(new Car { CarId = 6, BrandId = 6, ColorId = 6, DailyPrice = 0, ModelYear = "2020", Descriptions = "Tesla" });
-            carManager.Add(new Car { CarId = 7, BrandId = 7, ColorId = 7, DailyPrice = 10000, ModelYear = "2019", Descriptions = "Fiat" });
-
-        }
-        private static void BrandTest()
-        {
-            BrandManager brandManager = new BrandManager(new EfBrandDal());
-
-            foreach (var brand in brandManager.GetAll())
+            void UserManagerTest()
             {
-                Console.WriteLine("{0} / {1}", brand.BrandId, brand.BrandName);
+                UserManager userManager = new UserManager(new EfUserDal());
+                var result = userManager.GetAll();
+                if (result.Success)
+                {
+                    foreach (var user in result.Data)
+                    {
+                        Console.WriteLine(user.FirstName + "-" + user.LastName + "-" + user.Email);
+                    }
+                    Console.WriteLine(result.Message);
+                }
             }
 
-            brandManager.Add(new Brand { BrandName = "Tesla" });
-
-        }
-        private static void ColorTest()
-        {
-            ColorManager colorManager = new ColorManager(new EfColorDal());
-
-            foreach (var color in colorManager.GetAll())
+            void CustomerManagerTest()
             {
-                Console.WriteLine("{0} / {1}", color.ColorId, color.ColorName);
+                CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
+                var result = customerManager.GetAll();
+                if (result.Success)
+                {
+                    foreach (var customer in result.Data)
+                    {
+                        Console.WriteLine(customer.CustomerId);
+                        Console.WriteLine(customer.CompanyName);
+
+
+                    }
+                    Console.WriteLine(result.Message);
+                }
             }
 
-            colorManager.Add(new Color { ColorName = "gri" });
-
-        }
-
-        private static void DtoTest()
-        {
-            CarManager carManager = new CarManager(new EfCarDal());
-
-            foreach (var car in carManager.GetCarDetails())
+            void ColorManagerTest()
             {
-                Console.WriteLine("{0} / {1} / {2} / {3}", car.CarId, car.BrandName, car.ColorName, car.ModelYear);
+                ColorManager color = new ColorManager(new EfColorDal());
+                var result = color.GetAll();
+                if (result.Success)
+                {
+                    foreach (var colors in result.Data)
+                    {
+                        Console.WriteLine(colors.ColorId);
+                        Console.WriteLine(colors.ColorName);
+
+                    }
+                    Console.WriteLine(result.Message);
+                }
+                else
+                {
+                    Console.WriteLine(result.Message);
+                }
+            }
+
+
+            void BrandManagerTest()
+            {
+                BrandManager brandManager = new BrandManager(new EfBrandDal());
+                var result = brandManager.GetAll();
+                if (result.Success)
+                {
+                    foreach (var brand in result.Data)
+                    {
+                        Console.WriteLine(brand.BrandId);
+                        Console.WriteLine(brand.BrandName);
+                    }
+                    Console.WriteLine(result.Message);
+
+                }
+                else
+                {
+                    Console.WriteLine(result.Message);
+                }
+            }
+
+            void CarManagerTest()
+            {
+                CarManager carManager = new CarManager(new EfCarDal());
+                var result = carManager.GetAll();
+                if (result.Success)
+                {
+                    foreach (var car in result.Data)
+                    {
+                        Console.WriteLine(car.Descriptions);
+                        Console.WriteLine(car.ColorId);
+
+                    }
+                    Console.WriteLine(result.Message);
+
+                }
+                else
+                {
+                    Console.WriteLine(result.Message);
+                }
             }
 
         }

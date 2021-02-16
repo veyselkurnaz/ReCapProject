@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
+using Business.Constans;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
-using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -17,33 +18,46 @@ namespace Business.Concrete
             _colorDal = colorDal;
         }
 
-        public void Add(Color color)
+        public IResult Add(Color color)
         {
-            if (color.ColorName.Length > 2)
+            if (color.ColorName.Length < 2)
             {
-                _colorDal.Add(color);
-                Console.WriteLine("Renk basariyla eklendi");
+                return new ErrorResult(Messages.ColorNameInValid);
             }
+            _colorDal.Add(color);
+            return new SuccessResult(Messages.ColorAdded);
         }
 
-        public void Delete(Color color)
+        public IResult Delete(Color color)
         {
+            if (color.ColorName.Length < 2)
+            {
+                return new ErrorResult(Messages.ColorNameInValid);
+            }
             _colorDal.Delete(color);
+            return new SuccessResult(Messages.ColorDeleted);
         }
 
-        public List<Color> GetAll()
+        public IDataResult<List<Color>> GetAll()
         {
-            return _colorDal.GetAll();
+            return new SuccessDataResult<List<Color>>(_colorDal.GetAll(), Messages.ColorsListed);
         }
 
-        public Color GetByColorId(int id)
+        public IDataResult<List<Color>> GetById(int colorId)
         {
-            return _colorDal.Get(c=>c.ColorId==id);
+            return new SuccessDataResult<List<Color>>(_colorDal.GetAll(c => c.ColorId == colorId), Messages.ColorsListed);
         }
 
-        public void Update(Color color)
+        public IResult Update(Color color)
         {
+            if (color.ColorName.Length < 2)
+            {
+                return new ErrorResult(Messages.ColorNameInValid);
+            }
             _colorDal.Update(color);
+            return new SuccessResult(Messages.ColorUpdated);
         }
+
+
     }
 }
