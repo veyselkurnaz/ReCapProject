@@ -44,6 +44,7 @@ namespace Business.Constans
         public static string RentalUpdated = "Kiralama güncellendi.";
         public static string RentalsListed = "Kiralanmalar listelendi.";
         public static string RentalDateInValid = "Kiralanmış/kiralanmamış araba tarihi geçersiz.";
+        public static string RentalReturned = "Kiraladığınız araç teslim edildi.";
 
 
 

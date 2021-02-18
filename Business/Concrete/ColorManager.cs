@@ -13,51 +13,40 @@ namespace Business.Concrete
     {
         IColorDal _colorDal;
 
-        public ColorManager(IColorDal colorDal)
+        public ColorManager(IColorDal brandDal)
         {
-            _colorDal = colorDal;
+            _colorDal = brandDal;
         }
 
-        public IResult Add(Color color)
+        public IResult Add(Color entity)
         {
-            if (color.ColorName.Length < 2)
-            {
-                return new ErrorResult(Messages.ColorNameInValid);
-            }
-            _colorDal.Add(color);
+            _colorDal.Add(entity);
             return new SuccessResult(Messages.ColorAdded);
         }
 
         public IResult Delete(Color color)
         {
-            if (color.ColorName.Length < 2)
-            {
-                return new ErrorResult(Messages.ColorNameInValid);
-            }
             _colorDal.Delete(color);
             return new SuccessResult(Messages.ColorDeleted);
+
         }
 
         public IDataResult<List<Color>> GetAll()
         {
-            return new SuccessDataResult<List<Color>>(_colorDal.GetAll(), Messages.ColorsListed);
+            return new SuccessDataResult<List<Color>>(_colorDal.GetAll());
+
         }
 
-        public IDataResult<List<Color>> GetById(int colorId)
+        public IDataResult<Color> GetById(int id)
         {
-            return new SuccessDataResult<List<Color>>(_colorDal.GetAll(c => c.ColorId == colorId), Messages.ColorsListed);
+            return new SuccessDataResult<Color>(_colorDal.Get(c => c.ColorId == id));
         }
 
-        public IResult Update(Color color)
+        public IResult Update(Color entity)
         {
-            if (color.ColorName.Length < 2)
-            {
-                return new ErrorResult(Messages.ColorNameInValid);
-            }
-            _colorDal.Update(color);
+            _colorDal.Update(entity);
             return new SuccessResult(Messages.ColorUpdated);
+
         }
-
-
     }
 }

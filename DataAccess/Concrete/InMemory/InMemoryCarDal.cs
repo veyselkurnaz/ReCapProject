@@ -1,71 +1,67 @@
 ﻿using DataAccess.Abstract;
 using Entities.Concrete;
-using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Text;
 
 namespace DataAccess.Concrete.InMemory
 {
-    public class InMemoryCarDal : ICarDal
+    //public class InMemoryCarDal : ICarDal
+    public class InMemoryCarDal
     {
-        List<Car> _cars;
-        public InMemoryCarDal()
-        {
-            _cars = new List<Car>
-            {
-                new Car{Id=1, BrandId=38, ColorId=1, ModelYear="2020", DailyPrice=300, Descriptions="Tesla"},
-                new Car{Id=2, BrandId=39, ColorId=1, ModelYear="2021", DailyPrice=1500, Descriptions="BMW"},
-                new Car{Id=3, BrandId=40, ColorId=2, ModelYear="2015", DailyPrice=800, Descriptions="Audi"},
-                new Car{Id=3, BrandId=41,ColorId=2, ModelYear="2017", DailyPrice=600, Descriptions="Renault"}
-            };
-        }
-        public void Add(Car car)
-        {
-            _cars.Add(car);
-        }
+        //List<Car> _cars;
 
-        public void Delete(Car car)
-        {
-            Car carToDelete = _cars.SingleOrDefault(c => c.Id == car.Id);
-            _cars.Remove(carToDelete);
-        }
+        //public InMemoryCarDal()
+        //{
+        //    _cars = new List<Car>()
+        //    {
+        //        new Car{Id= 1, BrandId = 1, ColorId = 1, DailyPrice = 200, ModelYear = "2012", Descriptions = "Otomatik Dizel" },    
+        //        new Car{Id= 2, BrandId = 2, ColorId = 2, DailyPrice = 50, ModelYear = "2010", Descriptions = "Manuel Benzin" },
+        //        new Car{Id= 3, BrandId = 2, ColorId = 1, DailyPrice = 100, ModelYear = "2019", Descriptions = "Manuel Dizel" },
+        //        new Car{Id= 4, BrandId = 3, ColorId = 2, DailyPrice = 150, ModelYear = "2018", Descriptions = "Otomatik Benzin" },
+        //    };
+        //}
 
-        public Car Get(Expression<Func<Car, bool>> filter)
-        {
-            throw new NotImplementedException();
-        }
+        //public void Add(Car car)
+        //{
+        //    _cars.Add(car);
+        //}
 
-        public List<Car> GetAll(Expression<Func<Car, bool>> filter = null)
-        {
-            throw new NotImplementedException();
-        }
+        //public void Delete(int id)
+        //{
+        //    Car carToDelete = _cars.SingleOrDefault(c => c.Id == id);
+        //    _cars.Remove(carToDelete);
+        //}
 
-        public Car GetByID(int Id)
-        {
-            return _cars.SingleOrDefault(p => p.Id == Id);
-        }
+        //public List<Car> GetAll()
+        //{
+        //    return _cars;   
+        //}
 
-        public List<CarDetailDto> GetCarDetails()
-        {
-            throw new NotImplementedException();
-        }
+        //public List<Car> GetAllByBrand(int brandId)
+        //{
+        //    return _cars.Where(c => c.BrandId == brandId).ToList();
+        //}
 
-        public List<Car> GettAll()
-        {
-            return _cars;
-        }
+        //public List<Car> GetAllByColor(int colorId)
+        //{
+        //    return _cars.Where(c => c.ColorId == colorId).ToList();
+        //}
 
-        public void Update(Car car)
-        {
-            Car carToUpdate = _cars.SingleOrDefault(c => c.Id == car.Id);
-            carToUpdate.BrandId = car.BrandId;
-            carToUpdate.ColorId = car.ColorId;
-            carToUpdate.ModelYear = car.ModelYear;
-            carToUpdate.DailyPrice = car.DailyPrice;
-            carToUpdate.Descriptions = car.Descriptions;
-        }
+        //public Car GetById(int id)
+        //{
+        //    return _cars.SingleOrDefault(c => c.Id == id);
+        //}
+
+        //public void Update(Car car)
+        //{
+        //    Car carToUpdate = _cars.SingleOrDefault(c => c.Id == car.Id);
+        //    carToUpdate.BrandId = car.BrandId;
+        //    carToUpdate.ColorId = car.ColorId;
+        //    carToUpdate.DailyPrice = car.DailyPrice;
+        //    carToUpdate.ModelYear = car.ModelYear;
+        //    carToUpdate.Descriptions = car.Descriptions;
+        //}
     }
 }

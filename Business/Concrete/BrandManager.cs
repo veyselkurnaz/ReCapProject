@@ -18,48 +18,41 @@ namespace Business.Concrete
             _brandDal = brandDal;
         }
 
+
         public IResult Add(Brand brand)
         {
-            if (brand.BrandName.Length < 2)
+            if (brand.BrandName.Length > 2)
             {
-                return new ErrorResult(Messages.BrandNameInValid);
-
+                _brandDal.Add(brand);
+                return new SuccessResult(Messages.BrandAdded);
             }
-            _brandDal.Add(brand);
-            return new SuccessResult(Messages.BrandAdded);
+            return new ErrorResult(Messages.BrandNameInValid);
         }
 
         public IResult Delete(Brand brand)
         {
-            if (brand.BrandName.Length < 2)
-            {
-                return new ErrorResult(Messages.BrandNameInValid);
-
-            }
             _brandDal.Delete(brand);
             return new SuccessResult(Messages.BrandDeleted);
         }
 
         public IDataResult<List<Brand>> GetAll()
         {
-
-            return new SuccessDataResult<List<Brand>>(_brandDal.GetAll(), Messages.BrandsListed);
+            return new SuccessDataResult<List<Brand>>(_brandDal.GetAll());
         }
 
-        public IDataResult<List<Brand>> GetById(int brandId)
+        public IDataResult<Brand> GetById(int id)
         {
-            return new SuccessDataResult<List<Brand>>(_brandDal.GetAll(b => b.BrandId == brandId), Messages.BrandsListed);
+            return new SuccessDataResult<Brand>(_brandDal.Get(c => c.BrandId == id));
         }
 
         public IResult Update(Brand brand)
         {
-            if (brand.BrandName.Length < 2)
+            if (brand.BrandName.Length > 2)
             {
-                return new ErrorResult(Messages.BrandNameInValid);
-
+                _brandDal.Update(brand);
+                return new SuccessResult(Messages.BrandUpdated);
             }
-            _brandDal.Update(brand);
-            return new SuccessResult(Messages.BrandUpdated);
+            return new ErrorResult(Messages.BrandNameInValid);
         }
     }
 }

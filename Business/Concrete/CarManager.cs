@@ -6,6 +6,7 @@ using Entities.Concrete;
 using Entities.DTOs;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace Business.Concrete
@@ -21,68 +22,51 @@ namespace Business.Concrete
 
         public IResult Add(Car car)
         {
-            if (car.Descriptions.Length < 2)
+            if (car.DailyPrice > 0)
+            {
+                _carDal.Add(car);
+                return new SuccessResult(Messages.CarAdded);
+            }
+            else
             {
                 return new ErrorResult(Messages.CarsNameInValid);
-
             }
-            _carDal.Add(car);
-            return new SuccessResult(Messages.CarAdded);
         }
 
         public IResult Delete(Car car)
         {
-            if (car.Descriptions.Length < 2)
-            {
-                return new ErrorResult(Messages.CarsNameInValid);
-            }
+
             _carDal.Delete(car);
             return new SuccessResult(Messages.CarDeleted);
+
         }
 
         public IDataResult<List<Car>> GetAll()
         {
-            if (DateTime.Now.Hour == 16)
-            {
-                return new ErrorDataResult<List<Car>>(Messages.MaintenanceTime);
-            }
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(), Messages.CarsListed);
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll());
         }
 
-        public IDataResult<List<Car>> GetByDailyPrice(decimal min, decimal max)
+        public IDataResult<Car> GetById(int id)
         {
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(p => p.DailyPrice >= min && p.DailyPrice <= max));
+            return new SuccessDataResult<Car>(_carDal.Get(c => c.Id == id));
         }
-
-        public IDataResult<Car> GetById(int carId)
+        public IDataResult<List<CarDetailDto>> GetCarDetails(Expression<Func<Car, bool>> filter = null)
         {
-            return new SuccessDataResult<Car>(_carDal.Get(c => c.Id == carId), Messages.CarsListed);
-        }
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(filter));
 
-        public IDataResult<List<CarDetailDto>> GetCarDetails()
-        {
-            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails());
-        }
-
-        public IDataResult<List<Car>> GetCarsByBrandId(int id)
-        {
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(p => p.BrandId == id));
-        }
-
-        public IDataResult<List<Car>> GetCarsByColorId(int id)
-        {
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.ColorId == id));
         }
 
         public IResult Update(Car car)
         {
-            if (car.Descriptions.Length < 2)
+            if (car.DailyPrice > 0)
+            {
+                _carDal.Update(car);
+                return new SuccessResult(Messages.CarUpdated);
+            }
+            else
             {
                 return new ErrorResult(Messages.CarsNameInValid);
-
             }
-            _carDal.Update(car);
-            return new SuccessResult(Messages.CarUpdated);
         }
     }
 }

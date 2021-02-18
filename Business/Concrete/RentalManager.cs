@@ -3,8 +3,10 @@ using Business.Constans;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace Business.Concrete
@@ -20,23 +22,12 @@ namespace Business.Concrete
 
         public IResult Add(Rental rental)
         {
-            if (CheckCarReturnDate(rental.CarId) == true)
-            {
-                _rentalDal.Add(rental);
-                return new SuccessResult(Messages.RentalAdded);
-
-            }
-            else
+            if (rental.ReturnDate == null && _rentalDal.GetCarDetails(I => I.CarId == rental.CarId).Count > 0)
             {
                 return new ErrorResult(Messages.RentalDateInValid);
             }
-
-        }
-
-        public bool CheckCarReturnDate(int rentalId)
-        {
-            var result = _rentalDal.GetAll(r => r.CarId == rentalId && r.ReturnDate == null).Count;
-            return result > 0 ? false : true;
+            _rentalDal.Add(rental);
+            return new SuccessResult(Messages.RentalAdded);
         }
 
         public IResult Delete(Rental rental)
@@ -47,12 +38,17 @@ namespace Business.Concrete
 
         public IDataResult<List<Rental>> GetAll()
         {
-            return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(), Messages.RentalsListed);
+            return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll());
         }
 
-        public IDataResult<Rental> GetRentId(int rentId)
+        public IDataResult<Rental> GetById(int id)
         {
-            return new SuccessDataResult<Rental>(_rentalDal.Get(r => r.RentalId == rentId), Messages.RentalsListed);
+            return new SuccessDataResult<Rental>(_rentalDal.Get(I => I.RentalId == id));
+        }
+
+        public IDataResult<List<RentalDetailDto>> GetRentalDetails(Expression<Func<Rental, bool>> filter = null)
+        {
+            return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetCarDetails(filter), Messages.RentalReturned);
         }
 
         public IResult Update(Rental rental)

@@ -20,37 +20,24 @@ namespace Business.Concrete
 
         public IResult Add(User user)
         {
-            if (user.FirstName.Length < 2 && user.Password.Length < 4 && user.LastName.Length < 2)
-            {
-                return new ErrorResult(Messages.UserNameInValid);
-            }
             _userDal.Add(user);
             return new SuccessResult(Messages.UserAdded);
         }
 
         public IResult Delete(User user)
         {
-            if (user.FirstName.Length < 2 && user.Password.Length < 4 && user.LastName.Length < 2)
-            {
-                return new ErrorResult(Messages.UserNameInValid);
-            }
             _userDal.Delete(user);
             return new SuccessResult(Messages.UserDeleted);
         }
 
         public IDataResult<List<User>> GetAll()
         {
-            return new SuccessDataResult<List<User>>(_userDal.GetAll(), Messages.UsersListed);
+            return new SuccessDataResult<List<User>>(_userDal.GetAll());
         }
 
-        public IDataResult<List<User>> GetEmail(string userMail)
+        public IDataResult<User> GetById(int id)
         {
-            return new SuccessDataResult<List<User>>(_userDal.GetAll(ml => ml.Email == userMail));
-        }
-
-        public IDataResult<User> GetUserId(int userId)
-        {
-            return new SuccessDataResult<User>(_userDal.Get(u => u.UserId == userId));
+            return new SuccessDataResult<User>(_userDal.Get(I => I.UserId == id));
         }
 
         public IResult Update(User user)
